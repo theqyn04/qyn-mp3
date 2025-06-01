@@ -26,6 +26,8 @@
 
   <ItemGroup>
     <Folder Include="Area\" />
+    <Folder Include="wwwroot\image\coverArt\" />
+    <Folder Include="wwwroot\song\" />
   </ItemGroup>
 
 </Project>

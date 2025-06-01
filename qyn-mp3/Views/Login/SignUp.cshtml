@@ -9,10 +9,12 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - QYN MP3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="~/css/login.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <div class="login-container">
@@ -22,7 +24,23 @@
 
         <h1>Sign up for QYN MP3</h1>
 
-        <form asp-action="SignUp" method="post">
+        <!-- Form gửi OTP -->
+        <form id="sendOtpForm" method="post">
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label asp-for="Email">Email</label>
+                <div class="email-otp-row">
+                    <input asp-for="Email" id="emailInput" class="form-control" placeholder="Email" />
+                    <button type="submit" id="sendOtpBtn" class="send-otp-btn">Gửi OTP</button>
+                </div>
+                <span asp-validation-for="Email" class="text-danger"></span>
+                <div id="otpMessage" style="display:none; margin-top: 5px;"></div>
+            </div>
+        </form>
+
+        <!-- Form đăng ký -->
+        <form asp-action="SignUp" method="post" id="signUpForm" style="display:none;">
+            @Html.AntiForgeryToken()
             <div asp-validation-summary="ModelOnly" class="validation-summary-errors"></div>
 
             <div class="form-group">
@@ -38,15 +56,10 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Email">Email</label>
-                <div class="email-otp-row">
-                    <input asp-for="Email" id="emailInput" class="form-control" placeholder="Email" />
-                    <button type="button" id="sendOtpBtn" class="send-otp-btn">Gửi OTP</button>
-                </div>
+                <label asp-for="Email" style="display:none;">Email</label>
+                <input asp-for="Email" id="emailInputSignUp" style="display:none;" />
                 <span asp-validation-for="Email" class="text-danger"></span>
-                <div id="otpMessage" style="display:none; margin-top: 5px;"></div>
             </div>
-
 
             <div class="form-group">
                 <label asp-for="Password">Password</label>
@@ -60,7 +73,7 @@
                 <span asp-validation-for="Otp" class="text-danger"></span>
             </div>
 
-            <button type="submit">Sign Up</button>
+            <button type="submit" class="btn btn-primary">Sign Up</button>
         </form>
 
         <div class="divider">or</div>
@@ -73,47 +86,114 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    @section Scripts {
-        <script>
-            document.getElementById("sendOtpBtn").addEventListener("click", function () {
-                const email = document.getElementById("emailInput").value;
-                const messageDiv = document.getElementById("otpMessage");
-                messageDiv.style.display = "none";
+    <script>
+        $(document).ready(function () {
+            // Xử lý gửi OTP
+            $('#sendOtpForm').on('submit', function (e) {
+                e.preventDefault();
+
+                const email = $('#emailInput').val();
+                const messageDiv = $('#otpMessage');
+                messageDiv.hide();
 
                 if (!email) {
-                    alert("Vui lòng nhập email trước.");
-                    return;
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi',
+                        text: 'Vui lòng nhập email trước.',
+                        confirmButtonColor: '#e50914'
+                    });
+                    return false;
                 }
 
-                fetch("/Login/SendSignUpOtp", {
-                    method: "POST",
+                $.ajax({
+                    url: '@Url.Action("SendSignUpOtp", "Login")',
+                    type: 'POST',
+                    data: JSON.stringify({ email: email }),
+                    contentType: 'application/json',
                     headers: {
-                        "Content-Type": "application/json",
-                        "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+                        'RequestVerificationToken': $('#sendOtpForm input[name="__RequestVerificationToken"]').val()
                     },
-                    body: JSON.stringify({ email })
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        messageDiv.textContent = "OTP đã được gửi đến email của bạn.";
-                        messageDiv.classList.remove("text-danger");
-                        messageDiv.classList.add("text-success");
-                    } else {
-                        messageDiv.textContent = data.message || "Gửi OTP thất bại.";
-                        messageDiv.classList.remove("text-success");
-                        messageDiv.classList.add("text-danger");
+                    success: function (data) {
+                        if (data.success) {
+                            messageDiv.text('OTP đã được gửi đến email của bạn.').removeClass('text-danger').addClass('text-success').show();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Thành công',
+                                text: 'OTP đã được gửi đến email của bạn. Vui lòng nhập thông tin để đăng ký.',
+                                confirmButtonColor: '#e50914'
+                            });
+                            // Hiển thị form đăng ký
+                            $('#sendOtpForm').hide();
+                            $('#signUpForm').show();
+                            // Điền email vào form đăng ký (ẩn)
+                            $('#emailInputSignUp').val(email);
+                        } else {
+                            messageDiv.text(data.message || 'Gửi OTP thất bại.').removeClass('text-success').addClass('text-danger').show();
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi',
+                                text: data.message || 'Gửi OTP thất bại.',
+                                confirmButtonColor: '#e50914'
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Lỗi AJAX:', status, error);
+                        messageDiv.text('Đã xảy ra lỗi khi gửi OTP.').removeClass('text-success').addClass('text-danger').show();
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi',
+                            text: 'Đã xảy ra lỗi khi gửi OTP.',
+                            confirmButtonColor: '#e50914'
+                        });
                     }
-                    messageDiv.style.display = "block";
-                })
-                .catch(() => {
-                    messageDiv.textContent = "Đã xảy ra lỗi khi gửi OTP.";
-                    messageDiv.classList.remove("text-success");
-                    messageDiv.classList.add("text-danger");
-                    messageDiv.style.display = "block";
                 });
+
+                return false;
             });
-        </script>
-    }
+
+            // Xử lý form đăng ký
+            $('#signUpForm').on('submit', function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: '@Url.Action("SignUp", "Login")',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function (data) {
+                        if (data.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Đăng ký thành công',
+                                text: 'Bạn đã đăng ký thành công! Vui lòng đăng nhập.',
+                                confirmButtonColor: '#e50914'
+                            }).then(() => {
+                                window.location.href = '@Url.Action("Login", "Login")';
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi',
+                                text: data.message || 'Đăng ký thất bại.',
+                                confirmButtonColor: '#e50914'
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Lỗi AJAX:', status, error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi',
+                            text: 'Đã xảy ra lỗi khi đăng ký.',
+                            confirmButtonColor: '#e50914'
+                        });
+                    }
+                });
+
+                return false;
+            });
+        });
+    </script>
 </body>
 </html>

@@ -206,11 +206,23 @@ body {
 
 .card-img {
     width: 100%;
-    aspect-ratio: 1;
-    border-radius: 4px;
-    margin-bottom: 15px;
-    background-color: var(--deep-blue);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    height: 160px; /* Cố định chiều cao */
+    border-radius: 8px;
+    overflow: hidden; /* Ẩn phần ảnh thừa */
+    position: relative;
+    background-color: #2a2a2a; /* Màu nền nếu ảnh không tải */
+    margin-bottom: 12px;
+}
+
+    .card-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Giữ tỷ lệ và cắt ảnh vừa khung */
+        transition: transform 0.3s ease;
+    }
+
+.card:hover .card-img img {
+    transform: scale(1.05); /* Hiệu ứng phóng nhẹ khi hover */
 }
 
 .card-title {
@@ -442,4 +454,10 @@ body {
 
 .logo:hover .logo-text {
     text-shadow: 0 0 10px rgba(160, 217, 246, 0.5);
+}
+
+.card-duration {
+    font-size: 12px;
+    color: var(--light-gray);
+    margin-top: 5px;
 }

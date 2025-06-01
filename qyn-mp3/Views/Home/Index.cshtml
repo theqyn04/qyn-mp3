@@ -2,6 +2,8 @@
     Layout = null;
 }
 
+@model IEnumerable<qyn_mp3.Models.Song>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -117,52 +119,32 @@
         <section class="recently-played">
             <h2 class="section-title">Recently played</h2>
             <div class="card-grid">
-                <div class="card">
-                    <div class="card-img"></div>
-                    <h3 class="card-title">Whale Communication</h3>
-                    <p class="card-desc">Nature sounds</p>
-                </div>
-                <div class="card">
-                    <div class="card-img"></div>
-                    <h3 class="card-title">Coral Dreams</h3>
-                    <p class="card-desc">Ambient relaxation</p>
-                </div>
-                <div class="card">
-                    <div class="card-img"></div>
-                    <h3 class="card-title">Deep Dive</h3>
-                    <p class="card-desc">Deep house ocean mix</p>
-                </div>
-                <div class="card">
-                    <div class="card-img"></div>
-                    <h3 class="card-title">Seaside Serenade</h3>
-                    <p class="card-desc">Acoustic guitar by the shore</p>
-                </div>
+                @foreach (var song in Model)
+                {
+                    <div class="card">
+                        <div class="card-img">
+                            <img src="@song.CoverArt" alt="@song.Title" />
+                        </div>
+                        <h3 class="card-title">@song.Title</h3>
+                        <p class="card-desc">@song.Artist</p>
+                    </div>
+                }
             </div>
         </section>
 
         <section class="made-for-you">
             <h2 class="section-title">Made for you</h2>
             <div class="card-grid">
-                <div class="card">
-                    <div class="card-img"></div>
-                    <h3 class="card-title">Daily Mix 1</h3>
-                    <p class="card-desc">Oceanic, Marine Life and more</p>
-                </div>
-                <div class="card">
-                    <div class="card-img"></div>
-                    <h3 class="card-title">Daily Mix 2</h3>
-                    <p class="card-desc">Deep Sea Relaxation and more</p>
-                </div>
-                <div class="card">
-                    <div class="card-img"></div>
-                    <h3 class="card-title">Discover Weekly</h3>
-                    <p class="card-desc">Your weekly mixtape of fresh sounds</p>
-                </div>
-                <div class="card">
-                    <div class="card-img"></div>
-                    <h3 class="card-title">Release Radar</h3>
-                    <p class="card-desc">Catch all the latest releases</p>
-                </div>
+                @foreach (var song in Model)
+                {
+                    <div class="card">
+                        <div class="card-img">
+                            <img src="@song.CoverArt" alt="@song.Title" />
+                        </div>
+                        <h3 class="card-title">@song.Title</h3>
+                        <p class="card-desc">@song.Album</p>
+                    </div>
+                }
             </div>
         </section>
     </main>

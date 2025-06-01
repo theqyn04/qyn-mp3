@@ -5,7 +5,7 @@ namespace qyn_mp3.Models
     public class ApplicationUser : IdentityUser
     {
         public string? FullName { get; set; }
-        public string? ProfileImage { get; set; }
+        public string? ProfileImage { get; set; } = "/css/images/avatar/avatar-default.png";
 
 
         // Navigation properties
