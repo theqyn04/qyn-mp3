@@ -1,0 +1,155 @@
+﻿@model qyn_mp3.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Tài khoản của tôi";
+}
+
+<div class="account-container">
+    <div class="account-header">
+        <h1>Thông tin tài khoản</h1>
+    </div>
+
+    <div class="account-profile">
+        <div class="profile-image-container">
+            @if (!string.IsNullOrEmpty(Model.ProfileImage))
+            {
+                <img src="@Model.ProfileImage" alt="Profile Image" class="profile-image" />
+            }
+            else
+            {
+                <div class="default-profile-image">
+                    <i class="fas fa-user"></i>
+                </div>
+            }
+        </div>
+
+        <div class="profile-info">
+            <h2>@Model.FullName</h2>
+            <p class="email">@Model.Email</p>
+            <p class="username">@Model.UserName</p>
+        </div>
+    </div>
+
+    <div class="account-details">
+        <div class="detail-card">
+            <h3>Playlists của tôi</h3>
+            <p>@Model.Playlists?.Count playlist</p>
+            <a asp-controller="Playlist" asp-action="Index" class="btn-view-all">Xem tất cả</a>
+        </div>
+
+        <div class="detail-card">
+            <h3>Bài hát yêu thích</h3>
+            <p>@Model.FavoriteSongs?.Count bài hát</p>
+            <a asp-controller="Favorite" asp-action="Index" class="btn-view-all">Xem tất cả</a>
+        </div>
+
+        <div class="detail-card">
+            <h3>Lịch sử nghe</h3>
+            <p>@Model.ListeningHistories?.Count bài đã nghe</p>
+            <a asp-controller="History" asp-action="Index" class="btn-view-all">Xem tất cả</a>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .account-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            color: var(--text-color);
+        }
+
+        .account-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--deep-blue);
+        }
+
+        .account-profile {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+        }
+
+        .profile-image-container {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .default-profile-image {
+            font-size: 4rem;
+            color: var(--deep-blue);
+        }
+
+        .profile-info h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-info .email,
+        .profile-info .username {
+            color: var(--light-gray);
+            margin-bottom: 0.3rem;
+        }
+
+        .account-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .detail-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+            .detail-card:hover {
+                transform: translateY(-5px);
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+
+            .detail-card h3 {
+                font-size: 1.3rem;
+                margin-bottom: 1rem;
+                color: var(--aqua-blue);
+            }
+
+            .detail-card p {
+                font-size: 1.1rem;
+                margin-bottom: 1.5rem;
+            }
+
+        .btn-view-all {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: var(--deep-blue);
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+            .btn-view-all:hover {
+                background-color: var(--aqua-blue);
+            }
+    </style>
+}

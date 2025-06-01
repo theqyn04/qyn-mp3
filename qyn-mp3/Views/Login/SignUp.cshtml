@@ -1,0 +1,119 @@
+﻿@model qyn_mp3.Models.ViewModels.SignUpViewModel
+
+@{
+    ViewData["Title"] = "Sign Up";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - QYN MP3</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="~/css/login.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <img src="/image/logo/logo.jpg" alt="QYN MP3 Logo" class="logo-img" />
+        </div>
+
+        <h1>Sign up for QYN MP3</h1>
+
+        <form asp-action="SignUp" method="post">
+            <div asp-validation-summary="ModelOnly" class="validation-summary-errors"></div>
+
+            <div class="form-group">
+                <label asp-for="UserName">Username</label>
+                <input asp-for="UserName" placeholder="Username" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FullName">Full Name</label>
+                <input asp-for="FullName" placeholder="Full Name" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email">Email</label>
+                <div class="email-otp-row">
+                    <input asp-for="Email" id="emailInput" class="form-control" placeholder="Email" />
+                    <button type="button" id="sendOtpBtn" class="send-otp-btn">Gửi OTP</button>
+                </div>
+                <span asp-validation-for="Email" class="text-danger"></span>
+                <div id="otpMessage" style="display:none; margin-top: 5px;"></div>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Password">Password</label>
+                <input asp-for="Password" type="password" placeholder="Password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Otp">OTP</label>
+                <input asp-for="Otp" placeholder="Enter OTP" />
+                <span asp-validation-for="Otp" class="text-danger"></span>
+            </div>
+
+            <button type="submit">Sign Up</button>
+        </form>
+
+        <div class="divider">or</div>
+
+        <div class="signup-link">
+            Already have an account? <a asp-controller="Login" asp-action="Login">Log in to QYN MP3</a>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    @section Scripts {
+        <script>
+            document.getElementById("sendOtpBtn").addEventListener("click", function () {
+                const email = document.getElementById("emailInput").value;
+                const messageDiv = document.getElementById("otpMessage");
+                messageDiv.style.display = "none";
+
+                if (!email) {
+                    alert("Vui lòng nhập email trước.");
+                    return;
+                }
+
+                fetch("/Login/SendSignUpOtp", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    body: JSON.stringify({ email })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        messageDiv.textContent = "OTP đã được gửi đến email của bạn.";
+                        messageDiv.classList.remove("text-danger");
+                        messageDiv.classList.add("text-success");
+                    } else {
+                        messageDiv.textContent = data.message || "Gửi OTP thất bại.";
+                        messageDiv.classList.remove("text-success");
+                        messageDiv.classList.add("text-danger");
+                    }
+                    messageDiv.style.display = "block";
+                })
+                .catch(() => {
+                    messageDiv.textContent = "Đã xảy ra lỗi khi gửi OTP.";
+                    messageDiv.classList.remove("text-success");
+                    messageDiv.classList.add("text-danger");
+                    messageDiv.style.display = "block";
+                });
+            });
+        </script>
+    }
+</body>
+</html>

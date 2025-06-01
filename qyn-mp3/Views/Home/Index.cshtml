@@ -1,0 +1,229 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oceanic Music</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link href="~/css/home.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">
+            <div class="logo-container">
+                <img src="~/image/logo/logo.jpg" class="logo-img" />
+            </div>
+            <div class="logo-text">Oceanic</div>
+        </div>
+
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="#" class="nav-link active">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-search"></i>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-book"></i>
+                    <span>Your Library</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="playlists">
+            <h3>Playlists</h3>
+            <ul class="playlist-list">
+                <li class="playlist-item">
+                    <a href="#" class="playlist-link">Ocean Waves</a>
+                </li>
+                <li class="playlist-item">
+                    <a href="#" class="playlist-link">Deep Sea Relaxation</a>
+                </li>
+                <li class="playlist-item">
+                    <a href="#" class="playlist-link">Coral Reef Vibes</a>
+                </li>
+                <li class="playlist-item">
+                    <a href="#" class="playlist-link">Whale Songs</a>
+                </li>
+                <li class="playlist-item">
+                    <a href="#" class="playlist-link">Tropical Beats</a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search for songs, artists, or playlists">
+        </div>
+
+        <div class="user-menu">
+            <span>Premium</span>
+            <span>Support</span>
+            <span>Download</span>
+            <div class="user-avatar"></div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="welcome-section">
+            <h1>Good afternoon</h1>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-img"></div>
+                    <h3 class="card-title">Ocean Waves</h3>
+                    <p class="card-desc">Relaxing sounds of the sea</p>
+                </div>
+                <div class="card">
+                    <div class="card-img"></div>
+                    <h3 class="card-title">Deep Blue</h3>
+                    <p class="card-desc">Ambient underwater melodies</p>
+                </div>
+                <div class="card">
+                    <div class="card-img"></div>
+                    <h3 class="card-title">Marine Life</h3>
+                    <p class="card-desc">Electronic ocean beats</p>
+                </div>
+                <div class="card">
+                    <div class="card-img"></div>
+                    <h3 class="card-title">Tidal Flow</h3>
+                    <p class="card-desc">Chillwave meets the ocean</p>
+                </div>
+                <div class="card">
+                    <div class="card-img"></div>
+                    <h3 class="card-title">Saltwater</h3>
+                    <p class="card-desc">Indie surf rock</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="recently-played">
+            <h2 class="section-title">Recently played</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-img"></div>
+                    <h3 class="card-title">Whale Communication</h3>
+                    <p class="card-desc">Nature sounds</p>
+                </div>
+                <div class="card">
+                    <div class="card-img"></div>
+                    <h3 class="card-title">Coral Dreams</h3>
+                    <p class="card-desc">Ambient relaxation</p>
+                </div>
+                <div class="card">
+                    <div class="card-img"></div>
+                    <h3 class="card-title">Deep Dive</h3>
+                    <p class="card-desc">Deep house ocean mix</p>
+                </div>
+                <div class="card">
+                    <div class="card-img"></div>
+                    <h3 class="card-title">Seaside Serenade</h3>
+                    <p class="card-desc">Acoustic guitar by the shore</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="made-for-you">
+            <h2 class="section-title">Made for you</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-img"></div>
+                    <h3 class="card-title">Daily Mix 1</h3>
+                    <p class="card-desc">Oceanic, Marine Life and more</p>
+                </div>
+                <div class="card">
+                    <div class="card-img"></div>
+                    <h3 class="card-title">Daily Mix 2</h3>
+                    <p class="card-desc">Deep Sea Relaxation and more</p>
+                </div>
+                <div class="card">
+                    <div class="card-img"></div>
+                    <h3 class="card-title">Discover Weekly</h3>
+                    <p class="card-desc">Your weekly mixtape of fresh sounds</p>
+                </div>
+                <div class="card">
+                    <div class="card-img"></div>
+                    <h3 class="card-title">Release Radar</h3>
+                    <p class="card-desc">Catch all the latest releases</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Player Bar -->
+    <footer class="player-bar">
+        <div class="song-info">
+            <div class="song-cover"></div>
+            <div class="song-text">
+                <h4>Ocean Eyes</h4>
+                <p>Billie Eilish</p>
+            </div>
+            <button class="option-btn">
+                <i class="fas fa-heart"></i>
+            </button>
+        </div>
+
+        <div class="player-controls">
+            <div class="control-buttons">
+                <button class="control-btn">
+                    <i class="fas fa-random"></i>
+                </button>
+                <button class="control-btn">
+                    <i class="fas fa-step-backward"></i>
+                </button>
+                <button class="control-btn play-btn">
+                    <i class="fas fa-pause"></i>
+                </button>
+                <button class="control-btn">
+                    <i class="fas fa-step-forward"></i>
+                </button>
+                <button class="control-btn">
+                    <i class="fas fa-redo"></i>
+                </button>
+            </div>
+
+            <div class="progress-container">
+                <span class="progress-time">1:23</span>
+                <div class="progress-bar">
+                    <div class="progress"></div>
+                </div>
+                <span class="progress-time">3:45</span>
+            </div>
+        </div>
+
+        <div class="player-options">
+            <button class="option-btn">
+                <i class="fas fa-list"></i>
+            </button>
+            <button class="option-btn">
+                <i class="fas fa-laptop"></i>
+            </button>
+            <div class="volume-control">
+                <button class="option-btn">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+                <div class="volume-bar">
+                    <div class="volume-progress"></div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

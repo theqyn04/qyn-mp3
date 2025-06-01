@@ -1,0 +1,32 @@
+﻿﻿@using System.Text.Json
+@{
+    string successMsg = TempData["success"] != null ?
+        JsonSerializer.Deserialize<string>(TempData["success"].ToString()) : null;
+
+    string errorMsg = TempData["error"] != null ?
+        JsonSerializer.Deserialize<string>(TempData["error"].ToString()) : null;
+}
+
+@if (errorMsg != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Lỗi',
+            text: '@Html.Raw(errorMsg)',
+            confirmButtonColor: '#e50914'
+        });
+    </script>
+}
+
+@if (successMsg != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Thành công',
+            text: '@Html.Raw(successMsg)',
+            confirmButtonColor: '#e50914'
+        });
+    </script>
+}

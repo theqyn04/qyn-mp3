@@ -1,0 +1,93 @@
+﻿@using System.Text.Json
+@model qyn_mp3.Models.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - QYN MP3</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="~/css/login.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <!-- Logo Spotify (thay bằng logo của bạn) -->
+            <svg viewBox="0 0 20 20">
+                <img src="/image/logo/logo.jpg" alt="QYN MP3 Logo" class="logo-img" />
+
+            </svg>
+        </div>
+
+        <h1>Log in to QYN MP3</h1>
+
+        <form asp-action="Login" method="post">
+            <div asp-validation-summary="ModelOnly" class="validation-summary-errors"></div>
+
+            <input type="hidden" asp-for="ReturnUrl" />
+
+            <div class="form-group">
+                <label asp-for="Username">Username or email address</label>
+                <input asp-for="Username" placeholder="Username or email address" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password">Password</label>
+                <input asp-for="Password" type="password" placeholder="Password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="remember-forgot">
+                <div class="remember-me">
+                    <input asp-for="RememberMe" type="checkbox" />
+                    <label asp-for="RememberMe">Remember me</label>
+                </div>
+                <div class="forgot-password">
+                    <a asp-controller="Login" asp-action="ForgotPassword">Forgot password?</a>
+                </div>
+            </div>
+
+            <button type="submit">Log In</button>
+        </form>
+
+        <div class="divider">or</div>
+
+        <div class="signup-link">
+            Don't have an account? <a asp-controller="Login" asp-action="SignUp">Sign up for QYN MP3</a>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/login.js"></script>
+    @section Scripts {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const errorMessage = @Html.Raw(JsonSerializer.Serialize(TempData["error"]));
+                const successMessage = @Html.Raw(JsonSerializer.Serialize(TempData["success"]));
+
+                if (errorMessage && errorMessage !== 'null') {
+                    showToast('Error', errorMessage, 'error');
+                }
+
+                if (successMessage && successMessage !== 'null') {
+                    showToast('Success', successMessage, 'success');
+                }
+            });
+
+            function showToast(title, message, type) {
+                alert(`${title}: ${message}`);
+            }
+        </script>
+    }
+
+</body>
+</html>

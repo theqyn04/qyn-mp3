@@ -1,0 +1,260 @@
+﻿:root {
+    --aqua-blue: #a0d9f6;
+    --deep-blue: #4a90c3;
+    --white: #ffffff;
+    --light-gray: #d0e6f5;
+    --bubble-pink: #f5b3c6;
+    --text-color: #2a2a2a;
+    --input-bg: #eaf6fb;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.logo-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.email-otp-group {
+    display: flex;
+    gap: 10px; /* tạo khoảng cách giữa input và nút */
+}
+
+    .email-otp-group input {
+        flex: 1; /* input sẽ chiếm phần còn lại */
+        min-width: 0; /* tránh overflow */
+    }
+
+.send-otp-btn {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    background-color: #e50914;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    .send-otp-btn:hover {
+        background-color: #bf0810;
+    }
+
+
+
+body {
+    background: linear-gradient(to bottom right, #d2f1ff, #9dd6f5);
+    color: var(--text-color);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('/images/bg-underwater.png'); /* Optional: Add the underwater image as soft BG */
+    background-size: cover;
+    background-position: center;
+    backdrop-filter: blur(2px);
+}
+
+.login-container {
+    width: 100%;
+    max-width: 450px;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+    .logo svg {
+        width: 100px;
+        height: auto;
+        fill: var(--deep-blue);
+    }
+
+h1 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    text-align: center;
+    color: var(--deep-blue);
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: var(--text-color);
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--input-bg);
+    border: 1px solid var(--light-gray);
+    border-radius: 6px;
+    color: var(--text-color);
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+    input:focus {
+        outline: none;
+        border-color: var(--deep-blue);
+        background-color: #fff;
+    }
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+    .remember-me input {
+        width: auto;
+        margin-right: 8px;
+    }
+
+    .remember-me label {
+        margin-bottom: 0;
+        color: #444;
+    }
+
+button {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--deep-blue);
+    color: var(--white);
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+    button:hover {
+        background-color: var(--aqua-blue);
+        transform: scale(1.03);
+    }
+
+.divider {
+    margin: 25px 0;
+    text-align: center;
+    position: relative;
+    font-size: 14px;
+    color: #666;
+}
+
+    .divider::before,
+    .divider::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 42%;
+        height: 1px;
+        background-color: var(--light-gray);
+    }
+
+    .divider::before {
+        left: 0;
+    }
+
+    .divider::after {
+        right: 0;
+    }
+
+.signup-link {
+    text-align: center;
+    margin-top: 15px;
+    color: #444;
+}
+
+    .signup-link a {
+        color: var(--deep-blue);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+        .signup-link a:hover {
+            color: var(--bubble-pink);
+            text-decoration: underline;
+        }
+
+.send-otp-btn {
+    padding: 6px 8px;
+    font-size: 0.8rem;
+}
+
+.text-danger {
+    color: #e74c3c;
+    font-size: 13px;
+    margin-top: 5px;
+    display: block;
+}
+
+.validation-summary-errors ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 15px;
+}
+
+.validation-summary-errors li {
+    color: #e74c3c;
+    font-size: 13px;
+}
+
+.send-otp-btn {
+    padding: 8px 14px;
+    font-size: 14px;
+    background-color: var(--deep-blue); /* đổi sang màu xanh biển */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .send-otp-btn:hover {
+        background-color: #357aa7; /* màu hover hơi đậm hơn */
+    }
+
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.forgot-password a {
+    color: var(--deep-blue);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+    .forgot-password a:hover {
+        color: var(--bubble-pink);
+        text-decoration: underline;
+    }

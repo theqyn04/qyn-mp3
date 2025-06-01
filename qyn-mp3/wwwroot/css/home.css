@@ -1,0 +1,445 @@
+﻿:root {
+    --aqua-blue: #a0d9f6;
+    --deep-blue: #4a90c3;
+    --white: #ffffff;
+    --light-gray: #d0e6f5;
+    --bubble-pink: #f5b3c6;
+    --text-color: #2a2a2a;
+    --dark-blue: #1e3a8a;
+    --playlist-card: rgba(255, 255, 255, 0.1);
+    --navbar-bg: rgba(16, 24, 47, 0.8);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background: linear-gradient(to bottom, #0a1f33, #123d6b);
+    color: var(--white);
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    grid-template-rows: 60px 1fr 80px;
+}
+
+/* Sidebar */
+.sidebar {
+    grid-row: 1 / -1;
+    background-color: var(--navbar-bg);
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.logo-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background-color: var(--aqua-blue);
+}
+
+.logo-text {
+    font-size: 20px;
+    font-weight: 700;
+    background: linear-gradient(to right, var(--aqua-blue), var(--deep-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-menu {
+    list-style: none;
+}
+
+.nav-item {
+    margin-bottom: 15px;
+}
+
+.nav-link {
+    color: var(--white);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: all 0.3s;
+    opacity: 0.7;
+}
+
+    .nav-link:hover, .nav-link.active {
+        background-color: rgba(255, 255, 255, 0.1);
+        opacity: 1;
+    }
+
+    .nav-link i {
+        margin-right: 10px;
+        font-size: 20px;
+    }
+
+.playlists {
+    margin-top: 30px;
+}
+
+    .playlists h3 {
+        font-size: 14px;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+        letter-spacing: 1px;
+        color: var(--aqua-blue);
+    }
+
+.playlist-list {
+    list-style: none;
+}
+
+.playlist-item {
+    margin-bottom: 10px;
+}
+
+.playlist-link {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 14px;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+    .playlist-link:hover {
+        opacity: 1;
+        text-decoration: underline;
+    }
+
+/* Main Content */
+.main-content {
+    grid-column: 2;
+    grid-row: 2;
+    padding: 20px 40px;
+    overflow-y: auto;
+}
+
+/* Navbar */
+.navbar {
+    grid-column: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    z-index: 10;
+}
+
+.search-bar {
+    flex: 0.6;
+    position: relative;
+}
+
+    .search-bar input {
+        width: 100%;
+        padding: 10px 15px 10px 40px;
+        border-radius: 20px;
+        border: none;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: var(--white);
+        font-size: 14px;
+    }
+
+    .search-bar i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--white);
+    }
+
+.user-menu {
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--bubble-pink);
+    margin-left: 20px;
+}
+
+/* Welcome Section */
+.welcome-section {
+    margin-bottom: 30px;
+}
+
+    .welcome-section h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background-color: var(--playlist-card);
+    border-radius: 8px;
+    padding: 16px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+    .card:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        transform: translateY(-5px);
+    }
+
+.card-img {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    background-color: var(--deep-blue);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.card-desc {
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+/* Section Title */
+.section-title {
+    font-size: 22px;
+    margin: 30px 0 20px;
+}
+
+/* Recently Played */
+.recently-played {
+    margin-bottom: 40px;
+}
+
+/* Made For You */
+.made-for-you .card {
+    position: relative;
+    overflow: hidden;
+}
+
+    .made-for-you .card::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 50%;
+        background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    }
+
+/* Player Bar */
+.player-bar {
+    grid-column: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background-color: var(--dark-blue);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.song-info {
+    display: flex;
+    align-items: center;
+    flex: 0.3;
+}
+
+.song-cover {
+    width: 50px;
+    height: 50px;
+    border-radius: 4px;
+    margin-right: 15px;
+    background-color: var(--aqua-blue);
+}
+
+.song-text h4 {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.song-text p {
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+.player-controls {
+    flex: 0.4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.control-buttons {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.control-btn {
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+    .control-btn:hover {
+        opacity: 1;
+    }
+
+    .control-btn.play-btn {
+        font-size: 30px;
+        background-color: var(--white);
+        color: var(--dark-blue);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+.progress-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.progress-time {
+    font-size: 12px;
+    opacity: 0.7;
+    width: 40px;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.progress {
+    height: 100%;
+    width: 30%;
+    background-color: var(--aqua-blue);
+    border-radius: 2px;
+}
+
+.player-options {
+    flex: 0.3;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.option-btn {
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 16px;
+    margin-left: 15px;
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+    .option-btn:hover {
+        opacity: 1;
+    }
+
+.volume-control {
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+}
+
+.volume-bar {
+    width: 80px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.volume-progress {
+    height: 100%;
+    width: 70%;
+    background-color: var(--aqua-blue);
+    border-radius: 2px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+.logo-container {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent; /* Bỏ gradient background */
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2); /* Chỉ giữ border */
+}
+
+.logo-img {
+    width: 100%; /* Chiếm toàn bộ container */
+    height: 100%;
+    object-fit: cover; /* Thay contain bằng cover để lấp đầy */
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.logo-text {
+    font-size: 20px;
+    font-weight: 700;
+    background: linear-gradient(to right, var(--aqua-blue), var(--white));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.8px;
+}
+
+/* Hiệu ứng hover */
+.logo:hover .logo-img {
+    transform: scale(1.05);
+}
+
+.logo:hover .logo-text {
+    text-shadow: 0 0 10px rgba(160, 217, 246, 0.5);
+}
