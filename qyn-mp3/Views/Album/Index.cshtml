@@ -1,0 +1,244 @@
+﻿@model qyn_mp3.Models.ViewModels.AlbumViewModel
+@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>@Model.Album.Title - Oceanic Music</title>
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<link href="~/css/album.css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+	<!-- Sidebar (giống trang chủ) -->
+	<aside class="sidebar">
+		<!-- ... Copy từ trang chủ ... -->
+	</aside>
+
+	<!-- Navbar (giống trang chủ) -->
+	<nav class="navbar">
+		<!-- ... Copy từ trang chủ ... -->
+	</nav>
+
+	<!-- Main Content -->
+	<main class="main-content">
+		<!-- Album Header -->
+		<div class="album-header">
+			<div class="album-cover">
+				<img src="@Model.Album.CoverArt" alt="@Model.Album.Title" />
+			</div>
+			<div class="album-info">
+				<p class="album-type">ALBUM</p>
+				<h1>@Model.Album.Title</h1>
+				<div class="album-meta">
+					<a href="#" class="artist-link">@Model.Album.Artist.Name</a>
+					<span>•</span>
+					<span>@Model.Album.ReleaseYear</span>
+					<span>•</span>
+					<span>@Model.Album.Songs.Count songs</span>
+				</div>
+				<div class="album-actions">
+					<button class="play-button">
+						<i class="fas fa-play"></i> Play
+					</button>
+					<button class="like-button">
+						<i class="far fa-heart"></i>
+					</button>
+					<button class="more-button">
+						<i class="fas fa-ellipsis-h"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Song List -->
+		<div class="song-list">
+			<div class="song-list-header">
+				<span>#</span>
+				<span>TITLE</span>
+				<span><i class="far fa-clock"></i></span>
+			</div>
+
+			@foreach (var song in Model.Album.Songs)
+			{
+				<div class="song-row" data-song-id="@song.Id">
+					<div class="song-index">
+						<span class="index">@(Model.Album.Songs.ToList().IndexOf(song) + 1)</span>
+						<button class="play-button">
+							<i class="fas fa-play"></i>
+						</button>
+					</div>
+					<div class="song-info">
+						<div class="song-title">@song.Title</div>
+						<div class="song-artist">@Model.Album.Artist.Name</div>
+					</div>
+					<div class="song-duration">@song.Duration.ToString(@"m\:ss")</div>
+				</div>
+			}
+		</div>
+
+		<!-- Related Albums -->
+		<section class="related-albums">
+			<h2>More by @Model.Album.Artist.Name</h2>
+			<div class="album-grid">
+				@foreach (var album in Model.RelatedAlbums)
+				{
+					<a href="@Url.Action("Index", "Album", new { id = album.Id })" class="album-card">
+						<div class="album-cover">
+							<img src="@album.CoverArt" alt="@album.Title" />
+						</div>
+						<h3 class="album-title">@album.Title</h3>
+						<p class="album-artist">@Model.Album.Artist.Name</p>
+					</a>
+				}
+			</div>
+		</section>
+	</main>
+
+	<!-- Player Bar (giống trang chủ) -->
+	<footer class="player-bar">
+		<div class="song-info">
+			<div class="song-cover" style="background-image: url('/images/default-cover.jpg');"></div>
+			<div class="song-text">
+				<h4 class="song-title">No song selected</h4>
+				<p class="song-artist">Unknown artist</p>
+			</div>
+			<button class="option-btn like-btn">
+				<i class="far fa-heart"></i>
+			</button>
+		</div>
+
+		<div class="player-controls">
+			<div class="control-buttons">
+				<button class="control-btn shuffle-btn">
+					<i class="fas fa-random"></i>
+				</button>
+				<button class="control-btn prev-btn">
+					<i class="fas fa-step-backward"></i>
+				</button>
+				<button class="control-btn play-btn">
+					<i class="fas fa-play"></i>
+				</button>
+				<button class="control-btn next-btn">
+					<i class="fas fa-step-forward"></i>
+				</button>
+				<button class="control-btn repeat-btn">
+					<i class="fas fa-redo"></i>
+				</button>
+			</div>
+
+			<div class="progress-container">
+				<span class="current-time">0:00</span>
+				<div class="progress-bar">
+					<div class="progress"></div>
+				</div>
+				<span class="total-time">0:00</span>
+			</div>
+		</div>
+
+		<div class="player-options">
+			<button class="option-btn">
+				<i class="fas fa-list"></i>
+			</button>
+			<button class="option-btn">
+				<i class="fas fa-laptop"></i>
+			</button>
+			<div class="volume-control">
+				<button class="option-btn">
+					<i class="fas fa-volume-up"></i>
+				</button>
+				<div class="volume-bar">
+					<div class="volume-progress"></div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<script src="~/js/album.js"></script>
+	<!-- ... (phần HTML hiện tại giữ nguyên) ... -->
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			// Biến toàn cục quản lý player
+			let currentAudio = null;
+
+			// Hàm phát nhạc
+			async function playSong(songId) {
+				try {
+					console.log(`Attempting to play song ID: ${songId}`);
+
+					// Dừng bài hát hiện tại nếu có
+					if (currentAudio) {
+						currentAudio.pause();
+						currentAudio = null;
+					}
+
+					// Gọi API để lấy thông tin bài hát
+					const response = await fetch(`/api/player/play/${songId}`);
+
+					if (!response.ok) {
+						const errorData = await response.json();
+						throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+					}
+
+					const songData = await response.json();
+					console.log("Song data received:", songData);
+
+					// Tạo trình phát mới
+					currentAudio = new Audio();
+					currentAudio.src = songData.filePath;
+
+					// Xử lý sự kiện lỗi
+					currentAudio.addEventListener('error', function(e) {
+						console.error("Audio playback error:", {
+							error: e,
+							code: currentAudio.error.code,
+							message: currentAudio.error.message
+						});
+						showError(`Playback error: ${currentAudio.error.message}`);
+					});
+
+					// Phát nhạc
+					await currentAudio.play();
+
+					// Cập nhật UI
+					updatePlayerUI(songData);
+
+				} catch (error) {
+					console.error("Play song failed:", error);
+					showError(error.message);
+				}
+			}
+
+			// Hàm cập nhật giao diện player
+			function updatePlayerUI(songData) {
+				document.querySelector('.player-bar .song-title').textContent = songData.title;
+				document.querySelector('.player-bar .song-artist').textContent = songData.artist;
+
+				const coverElement = document.querySelector('.player-bar .song-cover');
+				if (songData.coverArt) {
+					coverElement.style.backgroundImage = `url('${songData.coverArt}')`;
+				}
+			}
+
+			// Hàm hiển thị lỗi
+			function showError(message) {
+				alert(message); // Hoặc hiển thị thông báo đẹp hơn
+			}
+
+			// Gán sự kiện click cho các bài hát
+			document.querySelectorAll('[data-song-id]').forEach(element => {
+				element.addEventListener('click', function() {
+					const songId = this.getAttribute('data-song-id');
+					playSong(songId);
+				});
+			});
+		});
+	</script>
+</body>
+
+</html>

@@ -2,7 +2,7 @@
     Layout = null;
 }
 
-@model IEnumerable<qyn_mp3.Models.Song>
+@model qyn_mp3.Models.ViewModels.HomeViewModel
 
 <!DOCTYPE html>
 <html lang="en">
@@ -79,7 +79,25 @@
             <span>Premium</span>
             <span>Support</span>
             <span>Download</span>
-            <div class="user-avatar"></div>
+
+            @if (User.Identity.IsAuthenticated && Model.CurrentUser != null)
+            {
+                <a href="@Url.Action("Index", "Account")" class="user-info-link">
+                    <span class="username">@Model.CurrentUser.FullName</span>
+                    @if (!string.IsNullOrEmpty(Model.CurrentUser.ProfileImage))
+                    {
+                        <img src="@Model.CurrentUser.ProfileImage" class="user-avatar" alt="User Avatar" />
+                    }
+                    else
+                    {
+                        <div class="user-avatar-default"></div>
+                    }
+                </a>
+            }
+            else
+            {
+                <a href="@Url.Action("Login", "Login")" class="login-link">Login</a>
+            }
         </div>
     </nav>
 
@@ -116,33 +134,51 @@
             </div>
         </section>
 
-        <section class="recently-played">
-            <h2 class="section-title">Recently played</h2>
-            <div class="card-grid">
-                @foreach (var song in Model)
+        <!-- Recently Played Albums Section -->
+        <section class="recent-albums">
+            <div class="section-header">
+                <h2 class="section-title">Recently played albums</h2>
+                <a href="#" class="see-all">See all</a>
+            </div>
+            <div class="album-grid">
+                @foreach (var album in Model.RecentAlbums)
                 {
-                    <div class="card">
-                        <div class="card-img">
-                            <img src="@song.CoverArt" alt="@song.Title" />
-                        </div>
-                        <h3 class="card-title">@song.Title</h3>
-                        <p class="card-desc">@song.Artist</p>
+                    <div class="album-card">
+                        <a href="@Url.Action("Index", "Album", new { id = album.Id })" class="album-link">
+                            <div class="album-cover">
+                                <img src="@album.CoverArt" alt="@album.Title" />
+                                <button class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                            </div>
+                            <h3 class="album-title">@album.Title</h3>
+                            <p class="album-artist">@album.Artist.Name</p>
+                        </a>
                     </div>
                 }
             </div>
         </section>
 
-        <section class="made-for-you">
-            <h2 class="section-title">Made for you</h2>
-            <div class="card-grid">
-                @foreach (var song in Model)
+        <!-- Recently Played Albums Section -->
+        <section class="recent-albums">
+            <div class="section-header">
+                <h2 class="section-title">Recently played albums</h2>
+                <a href="#" class="see-all">See all</a>
+            </div>
+            <div class="album-grid">
+                @foreach (var album in Model.RecentAlbums)
                 {
-                    <div class="card">
-                        <div class="card-img">
-                            <img src="@song.CoverArt" alt="@song.Title" />
-                        </div>
-                        <h3 class="card-title">@song.Title</h3>
-                        <p class="card-desc">@song.Album</p>
+                    <div class="album-card">
+                        <a href="@Url.Action("Index", "Album", new { id = album.Id })" class="album-link">
+                            <div class="album-cover">
+                                <img src="@album.CoverArt" alt="@album.Title" />
+                                <button class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                            </div>
+                            <h3 class="album-title">@album.Title</h3>
+                            <p class="album-artist">@album.Artist.Name</p>
+                        </a>
                     </div>
                 }
             </div>
@@ -207,5 +243,7 @@
             </div>
         </div>
     </footer>
+    
+    <script src="~/js/home.js"></script>
 </body>
 </html>

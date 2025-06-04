@@ -5,7 +5,7 @@ using qyn_mp3.Models;
 
 namespace qyn_mp3.Controllers
 {
-    [Authorize]
+    [Authorize] // Yêu cầu đăng nhập
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -18,7 +18,7 @@ namespace qyn_mp3.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
-            return View(user);
+            return View(user); // Truyền user vào view
         }
     }
 }

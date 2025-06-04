@@ -83,7 +83,7 @@ namespace qyn_mp3
                 options.User.RequireUniqueEmail = false;
             });
 
-            
+
 
             builder.Services.AddScoped<DBContext>();
 
@@ -112,6 +112,10 @@ namespace qyn_mp3
             app.UseAuthorization();
 
             app.MapControllers();
+
+            app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.MapControllerRoute(
                 name: "default",
